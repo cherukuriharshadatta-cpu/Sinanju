@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-RETRIES_ENABLED = False
+RETRIES_ENABLED = True
 
 
 class FakePaymentGateway:
