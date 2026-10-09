@@ -40,10 +40,12 @@ def confirm_payment(
     attempts = 2 if (simulate_timeout and should_retry) else 1
     result = None
 
+    # Persist one stable request identity for the logical payment and reuse it
+    # on every confirmation attempt.
+    idempotency_key = f"payment:{order_id}"
+
     for attempt in range(attempts):
-        # BUG: request identity changes every attempt.
-        key = f"{order_id}:attempt:{attempt + 1}"
-        result = gateway.charge(order_id, amount, idempotency_key=key)
+        result = gateway.charge(order_id, amount, idempotency_key=idempotency_key)
 
         # Attempt 1 "times out" after the provider already created the charge.
         if simulate_timeout and attempt == 0 and should_retry:
