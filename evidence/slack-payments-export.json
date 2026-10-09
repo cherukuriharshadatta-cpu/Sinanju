@@ -1,0 +1,15 @@
+{
+  "channel": "payments-incident",
+  "messages": [
+    {
+      "timestamp": "2023-04-18T15:05:00+05:30",
+      "author": "payments-oncall",
+      "text": "ORDER-42 was charged once before our client timed out, then the retry used a new request identity and created a second charge."
+    },
+    {
+      "timestamp": "2023-04-18T15:21:00+05:30",
+      "author": "payments-lead",
+      "text": "Disable automatic confirmation retries until the same idempotency identity is persisted across attempts."
+    }
+  ]
+}
