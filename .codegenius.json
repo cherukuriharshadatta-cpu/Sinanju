@@ -1,0 +1,41 @@
+{
+  "version": 1,
+  "execution_policy": "organization_approved_only",
+  "decisions": [
+    {
+      "id": "payment-confirmation-retry-guard",
+      "title": "Automatic payment confirmation retries",
+      "match": {
+        "paths": [
+          "payments.py"
+        ],
+        "terms": [
+          "RETRIES_ENABLED",
+          "retry",
+          "idempotency",
+          "duplicate charge"
+        ]
+      },
+      "historical_revision": "32570f61b515684f874e3b659c1396382af38cfe",
+      "historical_failure_signature": "order=ORDER-42;charges=2",
+      "oracle": {
+        "type": "approved_external_harness",
+        "command": [
+          "python",
+          "oracle.py"
+        ],
+        "description": "Force the historical timeout→retry path and count durable charges for ORDER-42."
+      },
+      "evidence_boundary": {
+        "mocked": [
+          "payment provider semantics"
+        ],
+        "not_tested": [
+          "production traffic",
+          "multi-region consistency",
+          "real provider infrastructure"
+        ]
+      }
+    }
+  ]
+}
